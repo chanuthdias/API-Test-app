@@ -1,9 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:movie_api_app/core/api.dart';
 import 'package:movie_api_app/core/const.dart';
+import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/widget/movie_slider.dart';
+import 'package:movie_api_app/widget/trending_slider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<Movie>> trendingMovies;
+  late Future<List<Movie>> topRatedMovies;
+  late Future<List<Movie>> upcomingMovies;
+  TextEditingController searchController = TextEditingController();
+
+  late final Api _api;
+  @override
+  void initState() {
+    super.initState();
+    _api = GetIt.I<Api>(); // Use GetIt to fetch the registered API instance
+    trendingMovies = _api.getTrendingMovies();
+    topRatedMovies = _api.getTopRatedMovies();
+    upcomingMovies = _api.getUpcomingMovies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +37,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: AppColors.primaryBlue,
         elevation: 0,
         title: const Text('FLICKER PLAY'),
+        //title: Image.asset('assets/Movie rating app logo.png'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -21,132 +47,81 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TextField(
-                // controller: searchController,
-                decoration: InputDecoration(
-                  hintText: 'Search for movies...',
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: const BorderSide(color: Colors.grey),
-                  ),
-                ),
-                onChanged: (value) {
-                  // Handle search logic here
-                },
-              ),
-
+              // TextField(
+              //   controller: searchController,
+              //   decoration: InputDecoration(
+              //     hintText: 'Search for movies...',
+              //     prefixIcon: const Icon(Icons.search),
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(8.0),
+              //       borderSide: const BorderSide(color: Colors.grey),
+              //     ),
+              //   ),
+              //   onChanged: (value) {
+              //     // Handle search logic here
+              //   },
+              // ),
               const SizedBox(height: 32),
-
               Text('Trending Movies', style: GoogleFonts.aBeeZee(fontSize: 25)),
-
               const SizedBox(height: 32),
-
               SizedBox(
-                child: MovieCard(
-                  title: 'Inception',
-                  rating: 8.8,
-                  imageUrl: 'https://via.placeholder.com/150',
+                child: FutureBuilder(
+                  future: trendingMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      final data = snapshot.data;
+                      return TrendingSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
               ),
-
               const SizedBox(height: 32),
-
               Text(
                 'Top Rated Movies',
                 style: GoogleFonts.aBeeZee(fontSize: 25),
               ),
-
               const SizedBox(height: 32),
-
               SizedBox(
-                child: MovieCard(
-                  title: 'Inception',
-                  rating: 8.8,
-                  imageUrl: 'https://via.placeholder.com/150',
+                child: FutureBuilder(
+                  future: topRatedMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      final data = snapshot.data;
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
               ),
-
               const SizedBox(height: 32),
-
               Text('Upcoming Movies', style: GoogleFonts.aBeeZee(fontSize: 25)),
-
               const SizedBox(height: 32),
-
               SizedBox(
-                child: MovieCard(
-                  title: 'Inception',
-                  rating: 8.8,
-                  imageUrl: 'https://via.placeholder.com/150',
+                child: FutureBuilder(
+                  future: upcomingMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      final data = snapshot.data;
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
                 ),
               ),
-
               const SizedBox(height: 32),
             ],
           ),
         ),
-      ),
-    );
-  }
-}
-
-class MovieCard extends StatelessWidget {
-  final String title;
-  final double rating;
-  final String imageUrl;
-
-  const MovieCard({
-    super.key,
-    required this.title,
-    required this.rating,
-    required this.imageUrl,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.white,
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: const EdgeInsets.only(bottom: 16),
-      child: Row(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Image.network(
-              imageUrl,
-              width: 100,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textColor,
-                ),
-              ),
-              SizedBox(height: 8),
-              Row(
-                children: [
-                  Icon(Icons.star, color: Colors.amber, size: 20),
-                  SizedBox(width: 4),
-                  Text(
-                    rating.toString(),
-                    style: TextStyle(fontSize: 16, color: AppColors.textColor),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

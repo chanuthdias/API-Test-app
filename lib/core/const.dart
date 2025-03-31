@@ -8,3 +8,8 @@ class AppColors {
   static const Color textColor = Color(0xFF333333);
   static const Color hintColor = Color(0xFF757575);
 }
+
+class ApiConst {
+  static const apiKey = '0378659b548c6e6a88cda244eb232853';
+  static const imagePath = 'https://image.tmdb.org/t/p/w500';
+}
