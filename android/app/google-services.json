@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "66848138570",
+    "project_id": "api-app-firebase-auth",
+    "storage_bucket": "api-app-firebase-auth.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66848138570:android:f7681191d3d67fee770db3",
+        "android_client_info": {
+          "package_name": "com.example.api_test_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2GhVSxZcOFz5_SR31Ev6f89zsiG0hA1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:66848138570:android:6f457a142a4bd967770db3",
+        "android_client_info": {
+          "package_name": "com.example.movie_api_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2GhVSxZcOFz5_SR31Ev6f89zsiG0hA1g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
