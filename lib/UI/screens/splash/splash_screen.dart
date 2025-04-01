@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart'; // Import Firebase core
-import 'package:movie_api_app/core/const.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_api_app/core/const.dart';
 import 'dart:async';
 
 class SplashScreen extends StatefulWidget {
@@ -18,17 +19,21 @@ class _SplashScreenState extends State<SplashScreen> {
     _initializeFirebase();
   }
 
-  // Initialize Firebase
   Future<void> _initializeFirebase() async {
     try {
-      await Firebase.initializeApp(); // Initialize Firebase
-      Timer(const Duration(seconds: 3), () {
-        context.go('/login'); // Navigate after initialization
-      });
+      await Firebase.initializeApp();
     } catch (e) {
-      print("Error initializing Firebase: $e"); // Handle initialization error
-      // Optionally show a message to the user
+      print("Error initializing Firebase: $e");
     }
+    // Navigate after 3 seconds and check auth state
+    Timer(const Duration(seconds: 3), () {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        context.go('/home');
+      } else {
+        context.go('/login');
+      }
+    });
   }
 
   @override
@@ -39,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.movie, size: 100, color: Colors.white),
+            const Icon(Icons.movie, size: 100, color: Colors.white),
             const SizedBox(height: 20),
             const Text(
               "Movie API App",

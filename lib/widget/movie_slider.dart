@@ -28,7 +28,8 @@ class MoviesSlider extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: SizedBox(
-                  height: 200,
+                  // size of the box in the top rated and upcoming
+                  height: 300,
                   width: 150,
                   child: Image.network(
                     filterQuality: FilterQuality.high,

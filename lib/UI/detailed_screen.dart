@@ -76,7 +76,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   SizedBox(
-                    child: Row(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
@@ -89,7 +89,7 @@ class DetailsScreen extends StatelessWidget {
                             children: [
                               const Icon(
                                 Icons.calendar_month,
-                                color: Colors.white,
+                                color: Colors.black,
                               ),
                               Text(
                                 ' Release Date : ',
@@ -108,6 +108,7 @@ class DetailsScreen extends StatelessWidget {
                             ],
                           ),
                         ),
+                        SizedBox(height: 10),
                         Container(
                           padding: const EdgeInsets.all(8),
                           decoration: BoxDecoration(
@@ -126,6 +127,87 @@ class DetailsScreen extends StatelessWidget {
                               ),
                               Text(
                                 '${movie.voteAverage.toStringAsFixed(1)}/10',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.star, color: Colors.black),
+                              Text(
+                                ' popularity : ',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${movie.popularity}',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.category, color: Colors.black),
+                              Text(
+                                ' Category adult/general : ',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${movie.adult ? 'Adult' : 'General'}',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.language, color: Colors.black),
+                              Text(
+                                ' language : ',
+                                style: GoogleFonts.roboto(
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                '${movie.originalLanguage}',
                                 style: GoogleFonts.roboto(
                                   fontSize: 17,
                                   fontWeight: FontWeight.bold,

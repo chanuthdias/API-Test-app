@@ -9,8 +9,6 @@ class Movie {
   String backdropPath;
   String originalLanguage;
   double popularity;
-  bool video;
-  int voteCount;
 
   // Constructor
   Movie({
@@ -24,8 +22,6 @@ class Movie {
     required this.backdropPath,
     required this.originalLanguage,
     required this.popularity,
-    required this.video,
-    required this.voteCount,
   });
 
   // Factory constructor from JSON
@@ -41,8 +37,6 @@ class Movie {
       backdropPath: json["backdrop_path"] ?? "",
       originalLanguage: json["original_language"] ?? "",
       popularity: json["popularity"]?.toDouble() ?? 0.0,
-      video: json["video"] ?? false,
-      voteCount: json["vote_count"]?.toInt() ?? 0,
     );
   }
 }

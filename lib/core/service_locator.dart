@@ -1,11 +1,16 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_api_app/core/api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 final GetIt getIt = GetIt.instance;
 
 void setupLocator() {
-  GetIt.I.registerLazySingleton<Dio>(
+  // Register FirebaseAuth
+  getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+
+  // Dio client
+  getIt.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(
         baseUrl: 'https://api.themoviedb.org/3',
@@ -16,5 +21,6 @@ void setupLocator() {
     ),
   );
 
-  GetIt.I.registerLazySingleton<Api>(() => Api());
+  // API service
+  getIt.registerLazySingleton<Api>(() => Api());
 }

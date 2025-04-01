@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_api_app/UI/detailed_screen.dart';
 import 'package:movie_api_app/UI/screens/auth/login_screen.dart';

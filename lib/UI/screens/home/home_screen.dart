@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/api.dart';
 import 'package:movie_api_app/core/const.dart';
+import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/models/movie.dart';
 import 'package:movie_api_app/widget/movie_slider.dart';
 import 'package:movie_api_app/widget/trending_slider.dart';
@@ -19,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
   TextEditingController searchController = TextEditingController();
+  final FirebaseAuth _auth = getIt<FirebaseAuth>();
 
   late final Api _api;
   @override
@@ -39,6 +43,21 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('FLICKER PLAY'),
         //title: Image.asset('assets/Movie rating app logo.png'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () async {
+              try {
+                await _auth.signOut();
+                context.go('/login');
+              } catch (e) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('Logout failed: $e')));
+              }
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
@@ -71,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      final data = snapshot.data;
                       return TrendingSlider(snapshot: snapshot);
                     } else {
                       return const Center(child: CircularProgressIndicator());
@@ -92,7 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      final data = snapshot.data;
                       return MoviesSlider(snapshot: snapshot);
                     } else {
                       return const Center(child: CircularProgressIndicator());
@@ -110,7 +127,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      final data = snapshot.data;
                       return MoviesSlider(snapshot: snapshot);
                     } else {
                       return const Center(child: CircularProgressIndicator());
