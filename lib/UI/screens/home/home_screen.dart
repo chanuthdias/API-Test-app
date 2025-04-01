@@ -1,9 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/api.dart';
+import 'package:movie_api_app/core/app_status.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/models/movie.dart';
@@ -22,7 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
   TextEditingController searchController = TextEditingController();
-  final FirebaseAuth _auth = getIt<FirebaseAuth>();
 
   late final Api _api;
   @override
@@ -37,18 +38,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.primaryBlue,
         elevation: 0,
-        title: const Text('FLICKER PLAY'),
+        title: const Text(
+          'FLICKER PLAY',
+          style: TextStyle(color: AppColors.textColor),
+        ),
         //title: Image.asset('assets/Movie rating app logo.png'),
         centerTitle: true,
         actions: [
           IconButton(
+            color: AppColors.textColor,
             icon: const Icon(Icons.logout),
             onPressed: () async {
               try {
-                await _auth.signOut();
+                await getIt<AppStatus>().logout();
                 context.go('/login');
               } catch (e) {
                 ScaffoldMessenger.of(
@@ -66,22 +72,14 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // TextField(
-              //   controller: searchController,
-              //   decoration: InputDecoration(
-              //     hintText: 'Search for movies...',
-              //     prefixIcon: const Icon(Icons.search),
-              //     border: OutlineInputBorder(
-              //       borderRadius: BorderRadius.circular(8.0),
-              //       borderSide: const BorderSide(color: Colors.grey),
-              //     ),
-              //   ),
-              //   onChanged: (value) {
-              //     // Handle search logic here
-              //   },
-              // ),
               const SizedBox(height: 32),
-              Text('Trending Movies', style: GoogleFonts.aBeeZee(fontSize: 25)),
+              Text(
+                'Trending Movies',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
               const SizedBox(height: 32),
               SizedBox(
                 child: FutureBuilder(
@@ -100,7 +98,10 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 32),
               Text(
                 'Top Rated Movies',
-                style: GoogleFonts.aBeeZee(fontSize: 25),
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
               ),
               const SizedBox(height: 32),
               SizedBox(
@@ -118,7 +119,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               const SizedBox(height: 32),
-              Text('Upcoming Movies', style: GoogleFonts.aBeeZee(fontSize: 25)),
+              Text(
+                'Upcoming Movies',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
               const SizedBox(height: 32),
               SizedBox(
                 child: FutureBuilder(

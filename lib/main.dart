@@ -1,9 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/router/router.dart';
 
-void main() {
-  setupLocator(); // Initialize dependencies
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  await setupServiceLocator();
   runApp(const MyApp());
 }
 

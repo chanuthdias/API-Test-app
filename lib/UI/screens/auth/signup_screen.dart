@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_api_app/core/const.dart';
+import 'package:movie_api_app/core/firebase_service.dart';
+import 'package:movie_api_app/core/service_locator.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -11,19 +15,19 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
+  final FirebaseService _firebaseService = getIt<FirebaseService>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   Future<void> _signUp() async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim(),
+      await _firebaseService.signUp(
+        emailController.text.trim(),
+        passwordController.text.trim(),
       );
-      context.go('/home'); // Navigate to home page after successful sign up
+      context.go('/home');
     } on FirebaseAuthException catch (e) {
-      // Show error message
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text(e.message ?? 'Error')));

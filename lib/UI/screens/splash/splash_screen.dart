@@ -1,9 +1,11 @@
+// lib/UI/screens/splash/splash_screen.dart
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:movie_api_app/core/app_status.dart';
 import 'package:movie_api_app/core/const.dart';
-import 'dart:async';
+import 'package:movie_api_app/core/service_locator.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,25 +18,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _initializeFirebase();
+    _initializeApp();
   }
 
-  Future<void> _initializeFirebase() async {
-    try {
-      await Firebase.initializeApp();
-    } catch (e) {
-      print("Error initializing Firebase: $e");
+  Future<void> _initializeApp() async {
+    await Future.delayed(const Duration(seconds: 3));
+    final appStatus = getIt<AppStatus>();
+
+    if (appStatus.isLoggedIn) {
+      context.go('/home');
+    } else {
+      context.go('/login');
     }
-    // Navigate after 3 seconds and check auth state
-    Timer(const Duration(seconds: 3), () {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        context.go('/home');
-      } else {
-        context.go('/login');
-      }
-    });
   }
+
 
   @override
   Widget build(BuildContext context) {

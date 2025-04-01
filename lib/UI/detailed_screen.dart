@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/widget/details_title.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key, required this.movie});
@@ -12,6 +14,7 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
@@ -21,9 +24,9 @@ class DetailsScreen extends StatelessWidget {
 
             leading: IconButton(
               // Back button
-              icon: const Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(Icons.arrow_back, color: AppColors.textColor),
               onPressed: () {
-                Navigator.pop(context);
+                context.go('/home'); // Navigates directly to '/home'
               },
             ),
 
@@ -52,9 +55,14 @@ class DetailsScreen extends StatelessWidget {
                     child: Text(
                       movie.title, // Display the movie title
                       style: GoogleFonts.aBeeZee(
+                        color: AppColors.textColor, // Text color
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline,
+                        decoration: TextDecoration.underline, // Underline text
+                        decorationColor:
+                            AppColors
+                                .textColor, // Change this to any color you want
+                        decorationThickness: 2, // Adjust thickness of underline
                       ),
                     ),
                   ),
@@ -64,6 +72,7 @@ class DetailsScreen extends StatelessWidget {
                     style: GoogleFonts.aBeeZee(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                      color: AppColors.textColor,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -72,6 +81,7 @@ class DetailsScreen extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontSize: 17,
                       fontWeight: FontWeight.normal,
+                      color: AppColors.textColor,
                     ),
                   ),
                   const SizedBox(height: 16),
@@ -79,143 +89,42 @@ class DetailsScreen extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(
-                                Icons.calendar_month,
-                                color: Colors.black,
-                              ),
-                              Text(
-                                ' Release Date : ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                movie.releaseDate,
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                        SizedBox(height: 10),
+                        InfoCard(
+                          icon: Icons.calendar_month,
+                          label: 'Release Date : ',
+                          value: '${movie.releaseDate}',
+                          iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.star, color: Colors.amber),
-                              Text(
-                                ' Rating : ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${movie.voteAverage.toStringAsFixed(1)}/10',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                        InfoCard(
+                          icon: Icons.star,
+                          label: 'Rating :',
+                          value: '${movie.voteAverage.toStringAsFixed(1)}/10',
+                          iconColor: Colors.amber,
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.star, color: Colors.black),
-                              Text(
-                                ' popularity : ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${movie.popularity}',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                        InfoCard(
+                          icon: Icons.trending_up,
+                          label: 'Popularity :',
+                          value: '${movie.popularity}',
+                          iconColor: Colors.blue,
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.category, color: Colors.black),
-                              Text(
-                                ' Category adult/general : ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${movie.adult ? 'Adult' : 'General'}',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                        InfoCard(
+                          icon: Icons.category,
+                          label: 'Category adult/general :',
+                          value: '${movie.adult ? 'Adult' : 'General'}',
+                          iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.language, color: Colors.black),
-                              Text(
-                                ' language : ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                '${movie.originalLanguage}',
-                                style: GoogleFonts.roboto(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                        InfoCard(
+                          icon: Icons.language,
+                          label: 'Language :',
+                          value: '${movie.originalLanguage}',
+                          iconColor: AppColors.textColor,
                         ),
+                        SizedBox(height: 10),
                       ],
                     ),
                   ),

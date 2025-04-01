@@ -11,7 +11,8 @@ class MoviesSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      // size of the box in the top rated and upcoming
+      height: 300,
       width: double.infinity,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -23,13 +24,12 @@ class MoviesSlider extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: GestureDetector(
               onTap: () {
-                context.pushNamed('details', extra: movie);
+                context.go('/details', extra: movie);
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: SizedBox(
-                  // size of the box in the top rated and upcoming
-                  height: 300,
+                child: Container(
+                  height: 400,
                   width: 150,
                   child: Image.network(
                     filterQuality: FilterQuality.high,

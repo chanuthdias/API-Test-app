@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_api_app/core/api.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:movie_api_app/core/app_status.dart';
+import 'package:movie_api_app/core/firebase_service.dart';
 
 final GetIt getIt = GetIt.instance;
 
-void setupLocator() {
-  // Register FirebaseAuth
-  getIt.registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance);
+Future<void> setupServiceLocator() async {
+  getIt.registerLazySingleton<FirebaseService>(() => FirebaseService());
+  getIt.registerLazySingleton<AppStatus>(() => AppStatus());
 
-  // Dio client
   getIt.registerLazySingleton<Dio>(
     () => Dio(
       BaseOptions(
@@ -21,6 +21,5 @@ void setupLocator() {
     ),
   );
 
-  // API service
   getIt.registerLazySingleton<Api>(() => Api());
 }
