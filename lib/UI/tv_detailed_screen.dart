@@ -97,7 +97,7 @@ class TvDetailedScreen extends StatelessWidget {
                         TVInfoCard(
                           icon: Icons.calendar_month,
                           label: 'First Air Date :',
-                          value: '${tv.firstAirDate}',
+                          value: tv.firstAirDate,
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
@@ -118,14 +118,14 @@ class TvDetailedScreen extends StatelessWidget {
                         TVInfoCard(
                           icon: Icons.category,
                           label: 'Category adult/general :',
-                          value: '${tv.adult ? 'Adult' : 'General'}',
+                          value: tv.adult ? 'Adult' : 'General',
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
                         TVInfoCard(
                           icon: Icons.language,
                           label: 'Language :',
-                          value: '${tv.originalLanguage}',
+                          value: tv.originalLanguage,
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
