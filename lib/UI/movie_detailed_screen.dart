@@ -55,6 +55,7 @@ class MovieDetailsScreen extends StatelessWidget {
                   // Title Text
                   Center(
                     child: Text(
+                      textAlign: TextAlign.center,
                       movie.title, // Display the movie title
                       style: GoogleFonts.aBeeZee(
                         color: AppColors.textColor, // Text color

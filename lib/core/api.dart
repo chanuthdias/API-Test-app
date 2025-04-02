@@ -27,6 +27,14 @@ class Api {
     return _fetchTVs('/tv/airing_today');
   }
 
+  Future<List<TV>> getOnTheAirTV() async {
+    return _fetchTVs('/tv/on_the_air');
+  }
+
+  Future<List<TV>> getPopularTV() async {
+    return _fetchTVs('/tv/popular');
+  }
+
   Future<List<Movie>> _fetchMovies(String endpoint) async {
     try {
       final response = await _dio.get(

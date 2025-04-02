@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/models/movie.dart';
 
-class TrendingSlider extends StatelessWidget {
-  const TrendingSlider({super.key, required this.movieStream});
+class MovieTrendingSlider extends StatelessWidget {
+  const MovieTrendingSlider({super.key, required this.movieStream});
 
   final Stream<List<Movie>> movieStream; // Stream of movies
 

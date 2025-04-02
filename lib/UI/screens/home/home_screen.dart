@@ -11,7 +11,7 @@ import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/models/movie.dart';
 import 'package:movie_api_app/models/tv.dart';
 import 'package:movie_api_app/widget/movie_slider.dart';
-import 'package:movie_api_app/widget/trending_slider.dart';
+import 'package:movie_api_app/widget/movie_trending_slider.dart';
 import 'package:movie_api_app/widget/tv_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -27,6 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Movie>> upcomingMovies;
   late Future<List<Movie>> nowPlayingMovies;
   late Future<List<TV>> airingTodayTVShows;
+  late Future<List<TV>> onAiringTVShows;
+  late Future<List<TV>> popularTVShows;
+
   TextEditingController searchController = TextEditingController();
 
   late final Api _api;
@@ -39,6 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
     upcomingMovies = _api.getUpcomingMovies();
     nowPlayingMovies = _api.getNowPlayingMovies();
     airingTodayTVShows = _api.getAiringTodayTV();
+    onAiringTVShows = _api.getOnTheAirTV();
+    popularTVShows = _api.getPopularTV();
   }
 
   @override
@@ -49,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.primaryBlue,
         elevation: 0,
         title: const Text(
-          'FLICKER PLAY',
+          'API MOVIE APP',
           style: TextStyle(color: AppColors.textColor),
         ),
         //title: Image.asset('assets/Movie rating app logo.png'),
@@ -80,6 +85,18 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const SizedBox(height: 32),
               Text(
+                'M O V I E S',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                  decoration: TextDecoration.underline,
+                  decorationColor:
+                      AppColors.textColor, // Change this to any color you want
+                  decorationThickness: 2,
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
                 'Trending Movies',
                 style: GoogleFonts.aBeeZee(
                   fontSize: 25,
@@ -94,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      return TrendingSlider(
+                      return MovieTrendingSlider(
                         movieStream: Stream.value(snapshot.data!),
                       );
                     } else {
@@ -181,6 +198,18 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 32),
               Text(
+                'T V - S E R I E S',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                  decoration: TextDecoration.underline,
+                  decorationColor:
+                      AppColors.textColor, // Change this to any color you want
+                  decorationThickness: 2,
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
                 'TV shows - Airing Today',
                 style: GoogleFonts.aBeeZee(
                   fontSize: 25,
@@ -191,6 +220,52 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 child: FutureBuilder<List<TV>>(
                   future: airingTodayTVShows,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      return TvSlider(tvStream: Stream.value(snapshot.data!));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'TV shows - On Airing',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                child: FutureBuilder<List<TV>>(
+                  future: onAiringTVShows,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      return TvSlider(tvStream: Stream.value(snapshot.data!));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'TV shows - Popular',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                child: FutureBuilder<List<TV>>(
+                  future: popularTVShows,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));

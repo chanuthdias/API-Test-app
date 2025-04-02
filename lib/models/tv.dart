@@ -7,7 +7,7 @@ class TV {
   double popularity;
   String posterPath;
   String firstAirDate;
-  String name;
+  // String name;
   double voteAverage;
   int voteCount;
 
@@ -21,7 +21,7 @@ class TV {
     required this.popularity,
     required this.posterPath,
     required this.firstAirDate,
-    required this.name,
+    // required this.name,
     required this.voteAverage,
     required this.voteCount,
   });
@@ -37,7 +37,7 @@ class TV {
       popularity: (json["popularity"] ?? 0.0).toDouble(),
       posterPath: json["poster_path"] ?? "",
       firstAirDate: json["first_air_date"] ?? "",
-      name: json["name"] ?? "",
+      // name: json["name"] ?? "",
       voteAverage: (json["vote_average"] ?? 0.0).toDouble(),
       voteCount: json["vote_count"] ?? 0,
     );

@@ -55,7 +55,8 @@ class TvDetailedScreen extends StatelessWidget {
                   // Title Text
                   Center(
                     child: Text(
-                      tv.name, // Display the tv title
+                      textAlign: TextAlign.center,
+                      tv.originalName, // Display the tv title
                       style: GoogleFonts.aBeeZee(
                         color: AppColors.textColor, // Text color
                         fontSize: 30,
@@ -92,6 +93,13 @@ class TvDetailedScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(height: 10),
+                        SizedBox(height: 10),
+                        TVInfoCard(
+                          icon: Icons.calendar_month,
+                          label: 'First Air Date :',
+                          value: '${tv.firstAirDate}',
+                          iconColor: AppColors.textColor,
+                        ),
                         SizedBox(height: 10),
                         TVInfoCard(
                           icon: Icons.star,
