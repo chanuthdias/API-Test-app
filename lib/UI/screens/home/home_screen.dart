@@ -9,8 +9,10 @@ import 'package:movie_api_app/core/app_status.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/models/tv.dart';
 import 'package:movie_api_app/widget/movie_slider.dart';
 import 'package:movie_api_app/widget/trending_slider.dart';
+import 'package:movie_api_app/widget/tv_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,6 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
   late Future<List<Movie>> nowPlayingMovies;
+  late Future<List<TV>> airingTodayTVShows;
   TextEditingController searchController = TextEditingController();
 
   late final Api _api;
@@ -35,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     topRatedMovies = _api.getTopRatedMovies();
     upcomingMovies = _api.getUpcomingMovies();
     nowPlayingMovies = _api.getNowPlayingMovies();
+    airingTodayTVShows = _api.getAiringTodayTV();
   }
 
   @override
@@ -169,6 +173,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       return MoviesSlider(
                         movieStream: Stream.value(snapshot.data!),
                       );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'TV shows - Airing Today',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                child: FutureBuilder<List<TV>>(
+                  future: airingTodayTVShows,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      return TvSlider(tvStream: Stream.value(snapshot.data!));
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }

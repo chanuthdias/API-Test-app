@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/const.dart';
-import 'package:movie_api_app/models/movie.dart';
-import 'package:movie_api_app/widget/details_title.dart';
+import 'package:movie_api_app/models/tv.dart';
+import 'package:movie_api_app/widget/movie_details_title.dart';
+import 'package:movie_api_app/widget/tv_details_title.dart';
 
-class DetailsScreen extends StatelessWidget {
-  const DetailsScreen({super.key, required this.movie});
+class TvDetailedScreen extends StatelessWidget {
+  const TvDetailedScreen({super.key, required this.tv});
 
-  final Movie movie;
+  final TV tv;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class DetailsScreen extends StatelessWidget {
                   bottomRight: Radius.circular(24),
                 ),
                 child: Image.network(
-                  '${ApiConst.imagePath}${movie.posterPath}',
+                  '${ApiConst.imagePath}${tv.posterPath}',
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.cover,
                 ),
@@ -55,7 +56,7 @@ class DetailsScreen extends StatelessWidget {
                   // Title Text
                   Center(
                     child: Text(
-                      movie.title, // Display the movie title
+                      tv.name, // Display the tv title
                       style: GoogleFonts.aBeeZee(
                         color: AppColors.textColor, // Text color
                         fontSize: 30,
@@ -79,7 +80,7 @@ class DetailsScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    movie.overview,
+                    tv.overview,
                     style: GoogleFonts.roboto(
                       fontSize: 17,
                       fontWeight: FontWeight.normal,
@@ -92,38 +93,32 @@ class DetailsScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         SizedBox(height: 10),
-                        InfoCard(
-                          icon: Icons.calendar_month,
-                          label: 'Release Date : ',
-                          value: '${movie.releaseDate}',
-                          iconColor: AppColors.textColor,
-                        ),
                         SizedBox(height: 10),
-                        InfoCard(
+                        TVInfoCard(
                           icon: Icons.star,
                           label: 'Rating :',
-                          value: '${movie.voteAverage.toStringAsFixed(1)}/10',
+                          value: '${tv.voteAverage.toStringAsFixed(1)}/10',
                           iconColor: Colors.amber,
                         ),
                         SizedBox(height: 10),
-                        InfoCard(
+                        TVInfoCard(
                           icon: Icons.trending_up,
                           label: 'Popularity :',
-                          value: '${movie.popularity}',
+                          value: '${tv.popularity}',
                           iconColor: Colors.blue,
                         ),
                         SizedBox(height: 10),
-                        InfoCard(
+                        TVInfoCard(
                           icon: Icons.category,
                           label: 'Category adult/general :',
-                          value: '${movie.adult ? 'Adult' : 'General'}',
+                          value: '${tv.adult ? 'Adult' : 'General'}',
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
-                        InfoCard(
+                        TVInfoCard(
                           icon: Icons.language,
                           label: 'Language :',
-                          value: '${movie.originalLanguage}',
+                          value: '${tv.originalLanguage}',
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),

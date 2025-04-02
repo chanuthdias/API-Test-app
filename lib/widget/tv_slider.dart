@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:movie_api_app/core/const.dart';
-import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/models/tv.dart';
 
-class MoviesSlider extends StatelessWidget {
-  const MoviesSlider({super.key, required this.movieStream});
+class TvSlider extends StatelessWidget {
+  const TvSlider({super.key, required this.tvStream});
 
-  final Stream<List<Movie>>
-  movieStream; // Accepts a Stream instead of AsyncSnapshot
+  final Stream<List<TV>> tvStream; // Accepts a Stream instead of AsyncSnapshot
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 300,
       width: double.infinity,
-      child: StreamBuilder<List<Movie>>(
-        stream: movieStream,
+      child: StreamBuilder<List<TV>>(
+        stream: tvStream,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No movies available.'));
+            return const Center(child: Text('No TV series available.'));
           }
 
-          final movies = snapshot.data!; // Extract movies list
+          final tvList = snapshot.data!; // Extract tv list
 
           return ListView.builder(
             scrollDirection: Axis.horizontal,
             physics: const BouncingScrollPhysics(),
-            itemCount: movies.length,
+            itemCount: tvList.length,
             itemBuilder: (context, index) {
-              final movie = movies[index];
+              final tv = tvList[index];
 
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: () {
-                    context.go('/movie_details', extra: movie);
+                    context.go('/tv_details', extra: tv);
                   },
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(8),
@@ -46,7 +45,7 @@ class MoviesSlider extends StatelessWidget {
                       height: 400,
                       width: 150,
                       child: Image.network(
-                        '${ApiConst.imagePath}${movie.posterPath}',
+                        '${ApiConst.imagePath}${tv.posterPath}',
                         filterQuality: FilterQuality.high,
                         fit: BoxFit.cover,
                       ),

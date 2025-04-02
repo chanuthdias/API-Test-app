@@ -1,12 +1,14 @@
 import 'package:go_router/go_router.dart';
+import 'package:movie_api_app/UI/tv_detailed_screen.dart';
 import 'package:movie_api_app/core/app_status.dart';
 import 'package:movie_api_app/core/service_locator.dart';
-import 'package:movie_api_app/UI/detailed_screen.dart';
+import 'package:movie_api_app/UI/movie_detailed_screen.dart';
 import 'package:movie_api_app/UI/screens/auth/login_screen.dart';
 import 'package:movie_api_app/UI/screens/auth/signup_screen.dart';
 import 'package:movie_api_app/UI/screens/home/home_screen.dart';
 import 'package:movie_api_app/UI/screens/splash/splash_screen.dart';
 import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/models/tv.dart';
 
 final GoRouter appRouter = GoRouter(
   initialLocation: '/',
@@ -52,11 +54,20 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const HomeScreen(),
     ),
     GoRoute(
-      path: '/details',
-      name: 'details',
+      path: '/movie_details',
+      name: 'movie_details',
       builder: (context, state) {
         final movie = state.extra as Movie;
-        return DetailsScreen(movie: movie);
+        return MovieDetailsScreen(movie: movie);
+      },
+    ),
+
+    GoRoute(
+      path: '/tv_details',
+      name: 'tv_details',
+      builder: (context, state) {
+        final tv = state.extra as TV;
+        return TvDetailedScreen(tv: tv);
       },
     ),
   ],

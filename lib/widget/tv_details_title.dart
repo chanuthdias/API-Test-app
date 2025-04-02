@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/const.dart';
 
-class InfoCard extends StatelessWidget {
+class TVInfoCard extends StatelessWidget {
   final IconData icon;
   final String label;
   final String value;
@@ -10,7 +10,7 @@ class InfoCard extends StatelessWidget {
   final Color textColor;
   final Color borderColor;
 
-  const InfoCard({
+  const TVInfoCard({
     super.key,
     required this.icon,
     required this.label,

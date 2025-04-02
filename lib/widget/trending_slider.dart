@@ -43,7 +43,7 @@ class TrendingSlider extends StatelessWidget {
 
               return GestureDetector(
                 onTap: () {
-                  context.go('/details', extra: movie);
+                  context.go('/movie_details', extra: movie);
                 },
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
