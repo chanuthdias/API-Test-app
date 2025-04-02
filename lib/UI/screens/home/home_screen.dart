@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Movie>> trendingMovies;
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
+  late Future<List<Movie>> nowPlayingMovies;
   TextEditingController searchController = TextEditingController();
 
   late final Api _api;
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     trendingMovies = _api.getTrendingMovies();
     topRatedMovies = _api.getTopRatedMovies();
     upcomingMovies = _api.getUpcomingMovies();
+    nowPlayingMovies = _api.getNowPlayingMovies();
   }
 
   @override
@@ -130,6 +132,29 @@ class _HomeScreenState extends State<HomeScreen> {
               SizedBox(
                 child: FutureBuilder(
                   future: upcomingMovies,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      return MoviesSlider(snapshot: snapshot);
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'Now Playing',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                child: FutureBuilder(
+                  future: nowPlayingMovies,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));

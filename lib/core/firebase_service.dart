@@ -18,6 +18,11 @@ class FirebaseService {
     );
   }
 
+  //  For firebase password reset
+  // Future<void> confirmPasswordReset(String code, String newPassword) async {
+  //   await _auth.confirmPasswordReset(code: code, newPassword: newPassword);
+  // }
+
   Future<void> signOut() async {
     await _auth.signOut();
   }

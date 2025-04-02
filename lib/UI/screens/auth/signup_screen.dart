@@ -26,7 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
         emailController.text.trim(),
         passwordController.text.trim(),
       );
-      context.go('/home');
+      context.go('/login');
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(
         context,

@@ -18,6 +18,10 @@ class Api {
     return _fetchMovies('/movie/upcoming');
   }
 
+  Future<List<Movie>> getNowPlayingMovies() async {
+    return _fetchMovies('/movie/now_playing');
+  }
+
   Future<List<Movie>> _fetchMovies(String endpoint) async {
     try {
       final response = await _dio.get(

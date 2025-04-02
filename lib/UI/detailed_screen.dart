@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,13 +20,16 @@ class DetailsScreen extends StatelessWidget {
             expandedHeight: 500,
             pinned: true,
             floating: true,
+            backgroundColor: AppColors.background,
 
             leading: IconButton(
-              // Back button
               icon: const Icon(Icons.arrow_back, color: AppColors.textColor),
-              onPressed: () {
-                context.go('/home'); // Navigates directly to '/home'
-              },
+              onPressed: () => context.go('/home'),
+              style: IconButton.styleFrom(
+                backgroundColor: AppColors.hintColor, // Black background
+                shape: const CircleBorder(), // Circular shape
+                padding: const EdgeInsets.all(10), //
+              ),
             ),
 
             flexibleSpace: FlexibleSpaceBar(
