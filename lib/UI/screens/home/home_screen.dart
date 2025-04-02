@@ -84,19 +84,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 32),
               SizedBox(
-                child: FutureBuilder(
+                child: FutureBuilder<List<Movie>>(
                   future: trendingMovies,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      return TrendingSlider(snapshot: snapshot);
+                      return TrendingSlider(
+                        movieStream: Stream.value(snapshot.data!),
+                      );
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }
                   },
                 ),
               ),
+
               const SizedBox(height: 32),
               Text(
                 'Top Rated Movies',
@@ -107,13 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 32),
               SizedBox(
-                child: FutureBuilder(
+                child: FutureBuilder<List<Movie>>(
                   future: topRatedMovies,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      return MoviesSlider(snapshot: snapshot);
+                      return MoviesSlider(
+                        movieStream: Stream.value(snapshot.data!),
+                      );
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }
@@ -130,13 +135,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 32),
               SizedBox(
-                child: FutureBuilder(
+                child: FutureBuilder<List<Movie>>(
                   future: upcomingMovies,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      return MoviesSlider(snapshot: snapshot);
+                      return MoviesSlider(
+                        movieStream: Stream.value(snapshot.data!),
+                      );
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }
@@ -153,13 +160,15 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 32),
               SizedBox(
-                child: FutureBuilder(
+                child: FutureBuilder<List<Movie>>(
                   future: nowPlayingMovies,
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
-                      return MoviesSlider(snapshot: snapshot);
+                      return MoviesSlider(
+                        movieStream: Stream.value(snapshot.data!),
+                      );
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }
