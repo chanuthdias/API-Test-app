@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/models/tv.dart';
-import 'package:movie_api_app/widget/movie_details_title.dart';
 import 'package:movie_api_app/widget/tv_details_title.dart';
 
 class TvDetailedScreen extends StatelessWidget {
