@@ -10,7 +10,6 @@ class Movie {
   String originalLanguage;
   double popularity;
 
-  // Constructor
   Movie({
     required this.title,
     required this.originalTitle,
@@ -24,7 +23,6 @@ class Movie {
     required this.popularity,
   });
 
-  // Factory constructor from JSON
   factory Movie.fromJson(Map<String, dynamic> json) {
     return Movie(
       title: json["title"] ?? "",

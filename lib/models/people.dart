@@ -7,9 +7,8 @@ class People {
   String originalName;
   double popularity;
   String?
-  profilePath; // Nullable, as some people might not have a profile picture
+  profilePath;
 
-  // Constructor
   People({
     required this.adult,
     required this.gender,
@@ -21,7 +20,6 @@ class People {
     this.profilePath,
   });
 
-  // Factory constructor from JSON
   factory People.fromJson(Map<String, dynamic> json) {
     return People(
       adult: json["adult"] ?? false,

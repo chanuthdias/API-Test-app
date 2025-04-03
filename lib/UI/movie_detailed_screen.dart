@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/models/movie.dart';
-import 'package:movie_api_app/widget/movie_details_title.dart';
+import 'package:movie_api_app/widget/details_title/movie_details_title.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   const MovieDetailsScreen({super.key, required this.movie});
@@ -26,9 +26,9 @@ class MovieDetailsScreen extends StatelessWidget {
               icon: const Icon(Icons.arrow_back, color: AppColors.textColor),
               onPressed: () => context.go('/home'),
               style: IconButton.styleFrom(
-                backgroundColor: AppColors.hintColor, // Black background
-                shape: const CircleBorder(), // Circular shape
-                padding: const EdgeInsets.all(10), //
+                backgroundColor: AppColors.hintColor,
+                shape: const CircleBorder(),
+                padding: const EdgeInsets.all(10),
               ),
             ),
 
@@ -56,16 +56,16 @@ class MovieDetailsScreen extends StatelessWidget {
                   Center(
                     child: Text(
                       textAlign: TextAlign.center,
-                      movie.title, // Display the movie title
+                      movie.title,
                       style: GoogleFonts.aBeeZee(
-                        color: AppColors.textColor, // Text color
+                        color: AppColors.textColor,
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.underline, // Underline text
+                        decoration: TextDecoration.underline,
                         decorationColor:
                             AppColors
-                                .textColor, // Change this to any color you want
-                        decorationThickness: 2, // Adjust thickness of underline
+                                .textColor,
+                        decorationThickness: 2,
                       ),
                     ),
                   ),

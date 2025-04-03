@@ -7,7 +7,7 @@ class MoviesSlider extends StatelessWidget {
   const MoviesSlider({super.key, required this.movieStream});
 
   final Stream<List<Movie>>
-  movieStream; // Accepts a Stream instead of AsyncSnapshot
+  movieStream;
 
   @override
   Widget build(BuildContext context) {

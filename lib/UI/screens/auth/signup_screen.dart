@@ -126,7 +126,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                 ),
                 onPressed: () {
-                  // Simple validation for empty fields
                   if (nameController.text.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text("Enter your full name")),
@@ -158,7 +157,7 @@ class _SignupScreenState extends State<SignupScreen> {
               // Login Navigation
               TextButton(
                 onPressed: () {
-                  context.go('/login'); // Use go_router for navigation
+                  context.go('/login');
                 },
                 child: Text(
                   "Already have an account? Login",

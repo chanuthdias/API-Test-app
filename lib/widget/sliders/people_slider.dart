@@ -10,7 +10,7 @@ class PeopleSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 180, // Adjusted height to fit circular images
+      height: 180,
       width: double.infinity,
       child: StreamBuilder<List<People>>(
         stream: peopleStream,

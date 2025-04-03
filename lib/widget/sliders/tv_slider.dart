@@ -6,8 +6,7 @@ import 'package:movie_api_app/models/tv.dart';
 class TvSlider extends StatelessWidget {
   const TvSlider({super.key, required this.tvStream});
 
-  final Stream<List<TV>> tvStream; // Accepts a Stream instead of AsyncSnapshot
-
+  final Stream<List<TV>> tvStream;
   @override
   Widget build(BuildContext context) {
     return SizedBox(

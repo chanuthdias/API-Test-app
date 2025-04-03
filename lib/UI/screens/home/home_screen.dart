@@ -11,10 +11,10 @@ import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/models/movie.dart';
 import 'package:movie_api_app/models/people.dart';
 import 'package:movie_api_app/models/tv.dart';
-import 'package:movie_api_app/widget/movie_slider.dart';
-import 'package:movie_api_app/widget/movie_trending_slider.dart';
-import 'package:movie_api_app/widget/people_slider.dart';
-import 'package:movie_api_app/widget/tv_slider.dart';
+import 'package:movie_api_app/widget/sliders/movie_slider.dart';
+import 'package:movie_api_app/widget/sliders/movie_trending_slider.dart';
+import 'package:movie_api_app/widget/sliders/people_slider.dart';
+import 'package:movie_api_app/widget/sliders/tv_slider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,7 +61,6 @@ class _HomeScreenState extends State<HomeScreen> {
           'API MOVIE APP',
           style: TextStyle(color: AppColors.textColor),
         ),
-        //title: Image.asset('assets/Movie rating app logo.png'),
         centerTitle: true,
         actions: [
           IconButton(
@@ -95,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.textColor,
                   decoration: TextDecoration.underline,
                   decorationColor:
-                      AppColors.textColor, // Change this to any color you want
+                      AppColors.textColor,
                   decorationThickness: 2,
                 ),
               ),
@@ -208,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.textColor,
                   decoration: TextDecoration.underline,
                   decorationColor:
-                      AppColors.textColor, // Change this to any color you want
+                      AppColors.textColor,
                   decorationThickness: 2,
                 ),
               ),
