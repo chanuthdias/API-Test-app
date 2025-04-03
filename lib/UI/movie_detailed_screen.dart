@@ -96,7 +96,7 @@ class MovieDetailsScreen extends StatelessWidget {
                         MovieInfoCard(
                           icon: Icons.calendar_month,
                           label: 'Release Date : ',
-                          value: '${movie.releaseDate}',
+                          value: movie.releaseDate,
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
@@ -117,14 +117,14 @@ class MovieDetailsScreen extends StatelessWidget {
                         MovieInfoCard(
                           icon: Icons.category,
                           label: 'Category adult/general :',
-                          value: '${movie.adult ? 'Adult' : 'General'}',
+                          value: movie.adult ? 'Adult' : 'General',
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
                         MovieInfoCard(
                           icon: Icons.language,
                           label: 'Language :',
-                          value: '${movie.originalLanguage}',
+                          value: movie.originalLanguage,
                           iconColor: AppColors.textColor,
                         ),
                         SizedBox(height: 10),
