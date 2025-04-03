@@ -9,9 +9,11 @@ import 'package:movie_api_app/core/app_status.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/core/service_locator.dart';
 import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/models/people.dart';
 import 'package:movie_api_app/models/tv.dart';
 import 'package:movie_api_app/widget/movie_slider.dart';
 import 'package:movie_api_app/widget/movie_trending_slider.dart';
+import 'package:movie_api_app/widget/people_slider.dart';
 import 'package:movie_api_app/widget/tv_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<TV>> airingTodayTVShows;
   late Future<List<TV>> onAiringTVShows;
   late Future<List<TV>> popularTVShows;
+  late Future<List<People>> popularPeople;
 
   TextEditingController searchController = TextEditingController();
 
@@ -44,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     airingTodayTVShows = _api.getAiringTodayTV();
     onAiringTVShows = _api.getOnTheAirTV();
     popularTVShows = _api.getPopularTV();
+    popularPeople = _api.getPopularPeople();
   }
 
   @override
@@ -271,6 +275,31 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Center(child: Text(snapshot.error.toString()));
                     } else if (snapshot.hasData) {
                       return TvSlider(tvStream: Stream.value(snapshot.data!));
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  },
+                ),
+              ),
+              const SizedBox(height: 32),
+              Text(
+                'Popular actors and actresses',
+                style: GoogleFonts.aBeeZee(
+                  fontSize: 25,
+                  color: AppColors.textColor,
+                ),
+              ),
+              const SizedBox(height: 32),
+              SizedBox(
+                child: FutureBuilder<List<People>>(
+                  future: popularPeople,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Center(child: Text(snapshot.error.toString()));
+                    } else if (snapshot.hasData) {
+                      return PeopleSlider(
+                        peopleStream: Stream.value(snapshot.data!),
+                      );
                     } else {
                       return const Center(child: CircularProgressIndicator());
                     }

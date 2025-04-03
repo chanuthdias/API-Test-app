@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:movie_api_app/core/const.dart';
 import 'package:movie_api_app/models/movie.dart';
+import 'package:movie_api_app/models/people.dart';
 import 'package:movie_api_app/models/tv.dart';
 
 class Api {
@@ -35,6 +36,10 @@ class Api {
     return _fetchTVs('/tv/popular');
   }
 
+  Future<List<People>> getPopularPeople() async {
+    return _fetchPeople('/person/popular');
+  }
+
   Future<List<Movie>> _fetchMovies(String endpoint) async {
     try {
       final response = await _dio.get(
@@ -57,6 +62,20 @@ class Api {
       );
       return (response.data['results'] as List)
           .map((tv) => TV.fromJson(tv))
+          .toList();
+    } on DioException catch (e) {
+      throw Exception(_handleDioError(e));
+    }
+  }
+
+  Future<List<People>> _fetchPeople(String endpoint) async {
+    try {
+      final response = await _dio.get(
+        endpoint,
+        queryParameters: {'api_key': ApiConst.apiKey},
+      );
+      return (response.data['results'] as List)
+          .map((people) => People.fromJson(people))
           .toList();
     } on DioException catch (e) {
       throw Exception(_handleDioError(e));

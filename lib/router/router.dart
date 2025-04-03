@@ -61,7 +61,6 @@ final GoRouter appRouter = GoRouter(
         return MovieDetailsScreen(movie: movie);
       },
     ),
-
     GoRoute(
       path: '/tv_details',
       name: 'tv_details',
