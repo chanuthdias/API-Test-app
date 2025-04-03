@@ -19,6 +19,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  bool _isPasswordVisible = false;
 
   Future<void> _signUp() async {
     try {
@@ -98,10 +99,22 @@ class _SignupScreenState extends State<SignupScreen> {
               // Password Field
               TextField(
                 controller: passwordController,
-                obscureText: true,
+                obscureText: !_isPasswordVisible,
                 decoration: InputDecoration(
                   hintText: "Password",
                   prefixIcon: const Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _isPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isPasswordVisible = !_isPasswordVisible;
+                      });
+                    },
+                  ),
                   filled: true,
                   fillColor: Colors.white,
                   border: OutlineInputBorder(
